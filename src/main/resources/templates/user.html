@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAVE(user) Documentation</title>
+</head>
+<body>
+<h2>Методы раздела /user/</h2>
+<label>Формат ответа: <b>JSON</b></label>
+<p><h4>User response body: </h4>{"uid":uid, "password":password, "phone":phone, "email":email,"balance":balance(long),"token":token,"day_created":day_created(Date object)}</p>
+<p><h4>Profile response body: </h4>{"uid":uid, "first_name":first_name, "second_name":second_name, "birth_date":birth_date}</p>
+<p><h4>Portfolio response body: </h4>{"uid":uid, "total_balance":total_balance(long), "actives":actives, "trade_history":trade_history}</p>
+<p><h4>Documents response body: </h4>{"uid":uid, "passport_data":passport_data, "passport_issued":passport_issued, "passport_main_page":passport_main_page,"passport_registration_page":passport_registration_page,"is_accepted":is_accepted(boolean)}</p>
+
+<ul>
+    <li><h3><a href="/documentation">/...</a></h3></li>
+    <li><h3><b>/new/  (Создание нового пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>phone</b> (not null) (string)</li>
+                <li><b>password</b> (not null) (string)</li>
+                <li><b>email</b> (string)</li>
+                <li><b>token</b> (string)</li>
+                <li><b>balance</b> (long)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/exists/  (Проверка наличия пользователя в БД)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>phone</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/auth/  (Авторизация пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>phone</b> (not null) (string)</li>
+                <li><b>password</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/token/  (Валидация токена пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/newPassword/  (Смена пароля пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>oldPass</b> (not null) (string)</li>
+                <li><b>newPass</b> (not null) (string)</li>
+
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/setProfile/  (Установить/обновить личные данные пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Profile </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>first_name</b> (not null) (string)</li>
+                <li><b>second_name</b> (not null) (string)</li>
+                <li><b>bday</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/getProfile/  (Получить личные данные пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Profile </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/setDocuments/  (Указать данные удостоверения личности пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Documents </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>doc_number</b> (not required) (string)</li>
+                <li><b>issued</b> (not required) (string)</li>
+                <li><b>main_page</b> (not required) (string) - Base64 image</li>
+                <li><b>reg_page</b> (not required) (string) - Base64 image</li>
+
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/getDocuments/  (Получить данные удостоверения личности пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Documents </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/getPortfolio/  (Получить данные портфолио пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Portfolio </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

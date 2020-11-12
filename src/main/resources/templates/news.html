@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAVE(news) Documentation</title>
+</head>
+<body>
+<h2>Методы раздела /news/</h2>
+<label>Формат ответа: <b>JSON</b></label>
+<p><h4>News response body: </h4>{"nid":nid, "news_source":"news_source","category":"category", "body":"body", "news_date":news_date}</p>
+
+<ul>
+    <li><h3><a href="/documentation">/...</a></h3></li>
+    <li><h3><b>/getNews/  (Получить все новости)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: News </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/getNewsCat/  (Получить новости по категории)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: News[] </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>category</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

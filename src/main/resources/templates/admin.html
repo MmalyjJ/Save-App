@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAVE(admin) Documentation</title>
+</head>
+<body>
+<h2>Методы раздела /admin/</h2>
+<label>Формат ответа: <b>JSON</b></label>
+<p><h4>Admin response body: </h4>{"phone":phone, "password":password, "email":email, "token":token}</p>
+
+<ul>
+    <li><h3><a href="/documentation">/...</a></h3></li>
+    <li><h3><b>/auth/  (Авторизовать администратора)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: News </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/getAllUsers/  (Получить всех пользователей)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: List<\User\> </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/addUser/  (Добавить нового пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>phone</b> (not null) (string)</li>
+                <li><b>password</b> (not null) (string)</li>
+                <li><b>email</b> (string)</li>
+                <li><b>balance</b> (long)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/addAdmin/  (Добавить нового администратора)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: Admin </br>
+            Параметры:
+            <ul>
+                <li><b>phone</b> (not null) (string)</li>
+                <li><b>password</b> (not null) (string)</li>
+                <li><b>email</b> (string)</li>
+                <li><b>secret</b> (not null)(string) (Параметр уточнить у владельца сервера)</li>
+            </ul>
+        </div>
+    </li>
+    <li><h3><b>/deleteUser/  (удалить пользователя)</b></h3>
+        <div style="margin-left: 50px;">
+            Метод: <b>GET</b> </br>
+            Response type: User </br>
+            Параметры:
+            <ul>
+                <li><b>token</b> (not null) (string)</li>
+                <li><b>uid</b> (not null) (string)</li>
+            </ul>
+        </div>
+    </li>
+</ul>
+</body>
+</html>
