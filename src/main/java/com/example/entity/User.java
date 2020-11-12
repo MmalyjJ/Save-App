@@ -44,8 +44,8 @@ public class User implements Serializable {
     private Documents documents;
 
 
-//    @OneToOne
-//    private Wallet wallet;
+    @OneToOne
+    private Wallet wallet;
 
 
     @Transient
@@ -65,7 +65,6 @@ public class User implements Serializable {
         this.dayCreated = new Date();
     }
 
-    public User(String password, String phone, String email, String token, Date date) {}
 
     public User(UserAuth userAuth) {
         this.password = userAuth.getPassword();

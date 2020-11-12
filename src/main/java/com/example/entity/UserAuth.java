@@ -2,6 +2,7 @@ package com.example.entity;
 
 
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -36,8 +37,8 @@ public class UserAuth {
     public UserAuth(String name, String email, String password, String confirmPassword) {
         this.userName = name;
         this.email = email;
-//        this.password = new BCryptPasswordEncoder().encode(password);
-//        this.confirmPassword = new BCryptPasswordEncoder().encode(confirmPassword);
+        this.password = new BCryptPasswordEncoder().encode(password);
+        this.confirmPassword = new BCryptPasswordEncoder().encode(confirmPassword);
         this.enabled = 1;
         this.role = Role.USER;
     }
