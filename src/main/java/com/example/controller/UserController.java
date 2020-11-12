@@ -3,14 +3,14 @@ package com.example.controller;
 import com.example.entity.Payment;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+//@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class UserController {
     @Autowired
     UserService userService;

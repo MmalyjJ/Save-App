@@ -8,7 +8,7 @@ import com.example.entity.User;
 import com.example.service.AdminService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-@PreAuthorize("hasAnyRole('ADMIN')")
+//@PreAuthorize("hasAnyRole('ADMIN')")
 public class AdminController {
     @Autowired
     private AdminService adminService;
