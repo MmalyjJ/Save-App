@@ -33,19 +33,11 @@ public class RegistrationController {
 
 
     @PostMapping("/registration")
-    public String registerNewUser(String name, String phone, String email, String password, String confirmPassword) {
-        Admin admin = new Admin();
-        admin.setEmail("admin");
-        admin.setPassword("admin");
-        admin.setPhone("phone");
-        admin.setRole(Role.ADMIN);
-
-        adminService.registerAdmin(admin);
-
+    public String registerNewUser(String name, String phone, String email, String password, String confirmPassword, String token) {
         UserAuth userAuth = new UserAuth(name, email, password, confirmPassword);
         User user = new User(userAuth);
-        user.setToken("token");
         user.setPhone(phone);
+        user.setToken(token);
 
         if(password.equals(confirmPassword)) {
             userAuthService.registerUserAuth(userAuth);
