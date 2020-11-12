@@ -39,4 +39,14 @@ public class Portfolio {
             
         }
     }
+
+
+    public Portfolio(){}
+
+    public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, List<Asset> assets) {
+        this.totalBalanceNow = totalBalanceNow;
+        this.totalBalancePrevDay = totalBalancePrevDay;
+        this.tradeHistory = tradeHistory;
+        this.assets = assets;
+    }
 }

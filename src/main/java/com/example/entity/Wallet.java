@@ -35,9 +35,10 @@ public class Wallet {
 
     public Wallet(){}
 
-    public Wallet(Long amount, Type type) {
+    public Wallet(Long amount) {
         this.amount = amount;
-        this.type = type;
+//        this.type = type;
+        this.type = Type.USD;
     }
 
 

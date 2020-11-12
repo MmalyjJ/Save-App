@@ -4,6 +4,7 @@ package com.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Data
@@ -22,7 +23,7 @@ public class Profile {
     private String secondName;
 
     @Column(name = "birth_date")
-    private String birthDay;
+    private Date birthDay;
 
     @Transient
     public int response_status = 0;
@@ -30,7 +31,7 @@ public class Profile {
 
     public Profile(){}
 
-    public Profile(String firstName, String secondName, String birthDay) {
+    public Profile(String firstName, String secondName, Date birthDay) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthDay = birthDay;

@@ -1,18 +1,14 @@
 package com.example.controller;
 
 
-import com.example.entity.Admin;
-import com.example.entity.Portfolio;
-import com.example.entity.Profile;
-import com.example.entity.User;
+import com.example.entity.*;
 import com.example.service.AdminService;
+import com.example.service.AssetService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/admin")
@@ -138,12 +134,26 @@ public class AdminController {
     @RequestMapping(value = "/add-new-user", method = {RequestMethod.GET, RequestMethod.POST})
     public User addNewUser(@RequestParam("email") String email, @RequestParam("password") String password,
                            @RequestParam("phone") String phone, @RequestParam("token") String token) {
-       return userService.registerUser(new User(password, phone, email, token));
+        User user = new User(password, phone, email, token);
+        Wallet wallet = new Wallet(new Random().nextLong());
+        Asset asset = new Asset("Google", new Random().nextLong(), new Date());
+        Payment payment = new Payment(user, user, new Random().nextLong(), new Date());
+        Portfolio portfolio = new Portfolio(new Random().nextLong(), new Random().nextLong(),
+                "HISTORY", new ArrayList<Asset>(Collections.singleton(asset)));
+        Profile profile = new Profile("First Name", "Last Name", user.getDayCreated());
+
+
+        user.setWallet(wallet);
+        user.setPortfolio(portfolio);
+        user.setProfile(profile);
+
+
+       return userService.registerUser(user);
     }
 
     @RequestMapping(value = "/set-user-profile", method = { RequestMethod.GET, RequestMethod.PUT })
     public Profile setProfile(@RequestParam("id") Integer id, @RequestParam(value = "first_name") String firstName,
-                              @RequestParam(value = "second_name") String secondName, @RequestParam(value = "birth-day") String birthDay){
+                              @RequestParam(value = "second_name") String secondName, @RequestParam(value = "birth-day") Date birthDay){
         return userService.setNewProfile(id, new Profile(firstName, secondName, birthDay));
     }
 
