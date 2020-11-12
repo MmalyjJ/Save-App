@@ -115,8 +115,7 @@ public class AdminController {
 
 
     @RequestMapping(value = "/update-token-user", method = { RequestMethod.GET, RequestMethod.PUT })
-    public void
-    updateToken(@RequestParam(value = "id") Integer id, @RequestParam(value = "new-token") String newToken){
+    public void updateToken(@RequestParam(value = "id") Integer id, @RequestParam(value = "new-token") String newToken){
         userService.changeTokenUser(id, newToken);
     }
 
@@ -136,6 +135,11 @@ public class AdminController {
 
 
     /*МЕТОДЫ ДЛЯ РАБОТЫ С ПРОФИЛЯМИ ПОЛЬЗОВАТЕЛЕЙ*/
+    @RequestMapping(value = "/add-new-user", method = {RequestMethod.GET, RequestMethod.POST})
+    public User addNewUser(@RequestParam("email") String email, @RequestParam("password") String password,
+                           @RequestParam("phone") String phone, @RequestParam("token") String token) {
+       return userService.registerUser(new User(password, phone, email, token));
+    }
 
     @RequestMapping(value = "/set-user-profile", method = { RequestMethod.GET, RequestMethod.PUT })
     public Profile setProfile(@RequestParam("id") Integer id, @RequestParam(value = "first_name") String firstName,

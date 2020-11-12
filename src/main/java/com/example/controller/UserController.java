@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
+import com.example.entity.Wallet;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,10 +31,10 @@ public class UserController {
 //    }
 
 
-//    @RequestMapping(value = "get-all-wallets", method = RequestMethod.GET)
-//    public Wallet getAllWalletsByUser(@RequestParam("/token") String token) {
-//        return userService.getAllWalletsByUser(token);
-//    }
+    @RequestMapping(value = "get-wallet-by-user", method = RequestMethod.GET)
+    public Wallet getAllWalletsByUser(@RequestParam("/token") String token) {
+        return userService.getWalletByUser(token);
+    }
 
 
     @RequestMapping(value = "get-all-payments", method = RequestMethod.GET)

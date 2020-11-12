@@ -239,13 +239,13 @@ public class UserService {
 
 
     //Метод для получения по критерию
-//    public Wallet getAllWalletsByUser(String token) {
-//        if(userRepository != null) {
-//            return userRepository.findByToken(token).getWallet();
-//        }
-//
-//        return null;
-//    }
+    public Wallet getWalletByUser(String token) {
+        if(userRepository != null) {
+            return userRepository.findByToken(token).getWallet();
+        }
+
+        return null;
+    }
 
     public List<Payment> getAllPaymentsByUser(String token) {
         if(userRepository != null && walletRepository != null && paymentsRepository != null) {
