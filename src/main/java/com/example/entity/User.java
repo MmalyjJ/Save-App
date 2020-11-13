@@ -10,11 +10,11 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "user_save")
+@Table(name = "users_save")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "password")
@@ -40,8 +40,8 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Documents documents;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Documents documents;
 
 
     @OneToOne

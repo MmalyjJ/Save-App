@@ -2,8 +2,10 @@ package com.example.controller;
 
 
 import com.example.entity.*;
+import com.example.repo.*;
 import com.example.service.AdminService;
 import com.example.service.AssetService;
+import com.example.service.PaymentService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,24 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WalletRepository walletRepository;
+
+    @Autowired
+    private AssetService assetService;
+
+    @Autowired
+    private AssetRepository assetRepository;
+
+    @Autowired
+    private PaymentsRepository paymentsRepository;
+
+    @Autowired
+    PortfolioRepository portfolioRepository;
+
+    @Autowired
+    ProfileRepository profileRepository;
 
 
     /*МЕТОДЫ ДЛЯ РАБОТЫ С АДМИНИСТРАТОРАМИ*/
@@ -135,17 +155,28 @@ public class AdminController {
     public User addNewUser(@RequestParam("email") String email, @RequestParam("password") String password,
                            @RequestParam("phone") String phone, @RequestParam("token") String token) {
         User user = new User(password, phone, email, token);
+
         Wallet wallet = new Wallet(new Random().nextLong());
+        walletRepository.save(wallet);
+
         Asset asset = new Asset("Google", new Random().nextLong(), new Date());
-        Payment payment = new Payment(user, user, new Random().nextLong(), new Date());
+        assetService.addNewAsset(asset);
+
+        Payment payment = new Payment(user, new User(), new Random().nextLong(), new Date());
+        paymentsRepository.save(payment);
+
         Portfolio portfolio = new Portfolio(new Random().nextLong(), new Random().nextLong(),
                 "HISTORY", new ArrayList<Asset>(Collections.singleton(asset)));
+        portfolioRepository.save(portfolio);
+
         Profile profile = new Profile("First Name", "Last Name", user.getDayCreated());
+        profileRepository.save(profile);
 
 
         user.setWallet(wallet);
         user.setPortfolio(portfolio);
         user.setProfile(profile);
+//        user.setDocuments(null);
 
 
        return userService.registerUser(user);
@@ -167,5 +198,26 @@ public class AdminController {
     @RequestMapping(value = "/get-user-portfolio", method = RequestMethod.GET)
     public Portfolio getPortfolio(@RequestParam(value = "token") String token){
         return userService.getUserByToken(token).getPortfolio();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "delete-all", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public void deleteAll() {
+        userService.deleteAllUsers();
+        assetRepository.deleteAll();
+        paymentsRepository.deleteAll();
+        portfolioRepository.deleteAll();
+        profileRepository.deleteAll();
+        walletRepository.deleteAll();
     }
 }

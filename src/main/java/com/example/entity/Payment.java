@@ -9,17 +9,17 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "payments_save")
+@Table(name = "payments")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User from;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User to;
 
     @Column(name = "amount")

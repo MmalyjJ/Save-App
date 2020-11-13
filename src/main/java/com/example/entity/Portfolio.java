@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user_portfolio_save")
+@Table(name = "user_portfolio")
 public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +25,9 @@ public class Portfolio {
     @Column(name = "trade_history")
     private String tradeHistory;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "portfolio_assets",
+            name = "portfolio_assets_save",
             joinColumns = @JoinColumn(name = "portfolio_id"),
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )

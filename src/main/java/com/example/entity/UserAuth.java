@@ -16,6 +16,7 @@ public class UserAuth {
     private String email;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "name")
     private String userName;
 
