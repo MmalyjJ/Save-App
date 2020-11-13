@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
+import com.example.entity.User;
 import com.example.entity.Wallet;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class UserController {
 //                               @RequestParam("amount") Long amount) {
 //        return userService.makePayment(token, walletIdFrom, toId, walletIdTo, amount);
 //    }
+
+    @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
+    public User getInfoByToken(@RequestParam("token") String token) {
+        return userService.getUserByToken(token);
+    }
 
 
     @RequestMapping(value = "get-wallet-by-user", method = RequestMethod.GET)
