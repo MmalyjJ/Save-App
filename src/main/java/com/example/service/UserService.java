@@ -80,7 +80,8 @@ public class UserService {
         if(userRepository != null && userRepository.findByToken(token) != null)
             return userRepository.findByToken(token);
 
-        throw new UserNotFoundException("USER WITH SUCH TOKEN IS NOT FOUND!");
+//        throw new UserNotFoundException("USER WITH SUCH TOKEN IS NOT FOUND!");
+        return null;
     }
 
     public User getUserByEmail(String email) {

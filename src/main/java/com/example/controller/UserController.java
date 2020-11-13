@@ -7,10 +7,14 @@ import com.example.exception.UserNotFoundException;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -38,8 +42,18 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
-    public User getInfoByToken(@RequestParam("token") String token) {
-        return userService.getUserByToken(token);
+    public ResponseEntity<User> getInfoByToken(@RequestParam("token") String token) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        if(userService.getUserByToken(token) == null) {
+            httpHeaders.add("message", "TOKEN ERROR");
+            httpHeaders.add("resultCode", "3");
+            return new ResponseEntity<User>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        httpHeaders.add("message", "ALL RIGHT");
+        httpHeaders.add("resultCode", "0");
+        return new ResponseEntity<User>(userService.getUserByToken(token), httpHeaders, HttpStatus.OK);
     }
 
 
