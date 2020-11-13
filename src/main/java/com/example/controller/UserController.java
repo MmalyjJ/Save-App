@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
+import com.example.entity.ResponseRest;
 import com.example.entity.User;
 import com.example.entity.Wallet;
 import com.example.exception.UserNotFoundException;
@@ -42,18 +43,13 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
-    public ResponseEntity<User> getInfoByToken(@RequestParam("token") String token) {
-        HttpHeaders httpHeaders = new HttpHeaders();
+    public ResponseRest getInfoByToken(@RequestParam("token") String token) {
+        User user =userService.getUserByToken(token);
 
-        if(userService.getUserByToken(token) == null) {
-            httpHeaders.add("message", "TOKEN ERROR");
-            httpHeaders.add("resultCode", "3");
-            return new ResponseEntity<User>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        if(user == null)
+            return new ResponseRest(null, "TOKEN PROBLEM", "0");
 
-        httpHeaders.add("message", "ALL RIGHT");
-        httpHeaders.add("resultCode", "0");
-        return new ResponseEntity<User>(userService.getUserByToken(token), httpHeaders, HttpStatus.OK);
+        return new ResponseRest(user, "ALL RIGHT", "1");
     }
 
 
