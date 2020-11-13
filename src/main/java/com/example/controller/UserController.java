@@ -49,9 +49,9 @@ public class UserController {
         User user =userService.getUserByToken(token);
 
         if(user == null)
-            return new ResponseRest(null, "TOKEN PROBLEM", "0");
+            return new ResponseRest(null, "TOKEN PROBLEM", "3");
 
-        return new ResponseRest(user, "ALL RIGHT", "1");
+        return new ResponseRest(user, "ALL RIGHT", "0");
     }
 
 
