@@ -2,12 +2,14 @@ package com.example.service;
 
 
 import com.example.entity.*;
+import com.example.exception.UserNotFoundException;
 import com.example.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -75,10 +77,10 @@ public class UserService {
     }
 
     public User getUserByToken(String token) {
-        if(userRepository != null)
+        if(userRepository != null && userRepository.findByToken(token) != null)
             return userRepository.findByToken(token);
 
-        return null;
+        throw new UserNotFoundException("USER WITH SUCH TOKEN IS NOT FOUND!");
     }
 
     public User getUserByEmail(String email) {
@@ -152,6 +154,7 @@ public class UserService {
     AssetRepository assetRepository;
 
     //Метод для регистрацци нового Портфолио
+
     public Portfolio addPortfolio(Portfolio portfolio) {
         if(portfolioRepository != null)
             return portfolioRepository.save(portfolio);
@@ -191,45 +194,33 @@ public class UserService {
     /*МЕТОДЫ ДЛЯ РАБОТЫ С КОШЕЛЬКАМИ */
 
     //Создание новой оплаты
-//    public Payment makePayment(String token, Integer toId, Integer walletIdTo, Long amount) {
+//    public Payment makePayment(String token, Integer toId, Long amount) {
 //        if(userRepository != null && walletRepository != null && paymentsRepository != null) {
 //            User from = userRepository.findByToken(token);
 //            User to = userRepository.getOne(toId);
 //
-//            Wallet walletFrom = new Wallet();
-//            Wallet walletTo = new Wallet();
+//            Wallet walletFrom = from.getWallet();
+//            Wallet walletTo = to.getWallet();
 //
-//            if(from != null && to != null) {
-//                List<Wallet> walletsByUserFrom = from.getWallets();
-//                List<Wallet> walletsByUserTo = to.getWallets();
+//            Payment payment;
 //
-//                Wallet walletRepoFrom = walletRepository.getOne(walletIdFrom);
-//                Wallet walletRepoTo = walletRepository.getOne(walletIdTo);
+//            if(walletFrom != null && walletTo != null) {
+//                if(walletFrom.getAmount() >= amount) {
+//                    walletFrom.setAmount(walletFrom.getAmount() - amount);
+//                    walletTo.setAmount(walletTo.getAmount() + amount);
 //
-//                for (Wallet wallet : walletsByUserFrom) {
-//                    if(walletRepoFrom.equals(wallet))
-//                        walletFrom = wallet;
-//                }
+//                    payment = new Payment(from, to, amount, new Date());
 //
-//                for(Wallet wallet : walletsByUserTo) {
-//                    if(walletRepoTo.equals(wallet))
-//                        walletTo = wallet;
-//                }
+//                    walletFrom.addNewPayment(payment);
+//                    walletTo.addNewPayment(payment);
 //
-//                if (walletFrom.getAmount() >= amount) {
-//                    walletRepoFrom = walletFrom;
-//                    walletRepoTo = walletTo;
+//                    from.setWallet(walletFrom);
+//                    to.setWallet(walletTo);
 //
-//                    walletRepoFrom.setAmount(walletFrom.getAmount() - amount);
-//                    walletRepoTo.setAmount(walletTo.getAmount() + amount);
+//                    userRepository.save(from);
+//                    userRepository.save(to);
 //
-//
-//                    //Просто сохраняем в repo, так как ID-шники не изменены,
-//                    //сохраняются кошельки с изменениями по тем же ID
-//                    walletRepository.save(walletRepoFrom);
-//                    walletRepository.save(walletRepoTo);
-//
-//                    return paymentsRepository.save(new Payment(from, to, amount, new Date()));
+//                    walletRepository.save()
 //                }
 //            }
 //        }

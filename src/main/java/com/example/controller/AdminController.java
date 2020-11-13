@@ -59,18 +59,6 @@ public class AdminController {
         return null;
     }
 
-//
-//    @RequestMapping(value = "/auth-admin-by-phone", method = RequestMethod.GET)
-//    public Admin authorizeAdminByPhone(@RequestParam(value = "phone") String phone, @RequestParam(value = "password") String password) {
-//        return adminService.authorizeAdminByPhone(phone, password);
-//    }
-//
-//
-//    @RequestMapping(value = "/auth-admin-by-email", method = RequestMethod.GET)
-//    public Admin authorizeAdminByEmail(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
-//        return adminService.authorizeAdminByEmail(email, password);
-//    }
-
 
     @RequestMapping(value = "/get-all-admins", method = RequestMethod.GET)
     public List<Admin> getAllAdmins() {
@@ -196,28 +184,18 @@ public class AdminController {
 
 
     @RequestMapping(value = "/get-user-portfolio", method = RequestMethod.GET)
-    public Portfolio getPortfolio(@RequestParam(value = "token") String token){
+    public Portfolio getPortfolio(@RequestParam(value = "token") String token) {
         return userService.getUserByToken(token).getPortfolio();
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping(value = "delete-all", method = {RequestMethod.DELETE, RequestMethod.GET})
-    public void deleteAll() {
-        userService.deleteAllUsers();
-        assetRepository.deleteAll();
-        paymentsRepository.deleteAll();
-        portfolioRepository.deleteAll();
-        profileRepository.deleteAll();
-        walletRepository.deleteAll();
-    }
+//    @RequestMapping(value = "delete-all", method = {RequestMethod.DELETE, RequestMethod.GET})
+//    public void deleteAll() {
+//        userService.deleteAllUsers();
+//        assetRepository.deleteAll();
+//        paymentsRepository.deleteAll();
+//        portfolioRepository.deleteAll();
+//        profileRepository.deleteAll();
+//        walletRepository.deleteAll();
+//    }
 }

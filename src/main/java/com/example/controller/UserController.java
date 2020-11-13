@@ -3,11 +3,14 @@ package com.example.controller;
 import com.example.entity.Payment;
 import com.example.entity.User;
 import com.example.entity.Wallet;
+import com.example.exception.UserNotFoundException;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    HttpServletRequest request;
 
 
     @GetMapping("/user")
