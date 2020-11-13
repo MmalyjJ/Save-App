@@ -21,7 +21,7 @@ public class Wallet {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private Type type;
+    private Currency currency;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -35,14 +35,13 @@ public class Wallet {
 
     public Wallet(){}
 
-    public Wallet(Long amount) {
+    public Wallet(Long amount, Currency currency) {
         this.amount = amount;
-//        this.type = type;
-        this.type = Type.USD;
+        this.currency = currency;
     }
 
 
-    private enum Type {
-        USD, EURO, BY,RB
+    public void addNewPayment(Payment payment) {
+        this.payments.add(payment);
     }
 }

@@ -25,6 +25,10 @@ public class Portfolio {
     @Column(name = "trade_history")
     private String tradeHistory;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currency")
+    private Currency currency;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "portfolio_assets_save",
@@ -32,13 +36,6 @@ public class Portfolio {
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
     private List<Asset> assets;
-
-
-    public void addAssets(List<Asset> assets) {
-        for (Asset asset : assets) {
-            
-        }
-    }
 
 
     public Portfolio(){}
