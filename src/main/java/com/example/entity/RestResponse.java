@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseRest {
-    private Object data;
+public class RestResponse<T> {
+    private T data;
     private String message;
-    private String resultCode;
+    private int resultCode;
 }

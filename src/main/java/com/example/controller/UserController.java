@@ -1,22 +1,17 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
-import com.example.entity.ResponseRest;
+import com.example.entity.RestResponse;
 import com.example.entity.User;
 import com.example.entity.Wallet;
-import com.example.exception.UserNotFoundException;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
+//import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/user")
@@ -24,9 +19,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-
-    @Autowired
-    HttpServletRequest request;
 
 
     @GetMapping("/user")
@@ -43,26 +35,34 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
-    public ResponseRest getInfoByToken(@RequestParam("token") String token) {
-        ResponseRest response = new ResponseRest();
-
+    public RestResponse getInfoByToken(@RequestParam("token") String token) {
         User user =userService.getUserByToken(token);
 
         if(user == null)
-            return new ResponseRest(null, "TOKEN PROBLEM", "3");
+            return new RestResponse(null, "TOKEN PROBLEM", 3);
 
-        return new ResponseRest(user, "ALL RIGHT", "0");
+        return new RestResponse(user, "ALL RIGHT", 0);
     }
 
 
     @RequestMapping(value = "get-wallet-by-user", method = RequestMethod.GET)
-    public Wallet getAllWalletsByUser(@RequestParam("/token") String token) {
-        return userService.getWalletByUser(token);
+    public RestResponse getWalletByUser(@RequestParam("/token") String token) {
+        Wallet wallet = userService.getWalletByUser(token);
+
+        if(wallet == null)
+            return new RestResponse(null, "WALLET PROBLEM", 7);
+
+        return new RestResponse(wallet, "ALL RIGHT", 0);
     }
 
 
     @RequestMapping(value = "get-all-payments", method = RequestMethod.GET)
-    public List<Payment> getAllPaymentsByUser(@RequestParam("/token") String token) {
-        return userService.getAllPaymentsByUser(token);
+    public RestResponse getAllPaymentsByUser(@RequestParam("/token") String token) {
+        List<Payment> payments = userService.getAllPaymentsByUser(token);
+
+        if(payments == null)
+            return new RestResponse(null, "PAYMENTS PROBLEM", 8);
+
+        return new RestResponse(payments, "ALL RIGHT", 0);
     }
 }
