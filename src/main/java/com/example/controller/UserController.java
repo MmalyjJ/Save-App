@@ -44,6 +44,8 @@ public class UserController {
 
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
     public ResponseRest getInfoByToken(@RequestParam("token") String token) {
+        ResponseRest response = new ResponseRest();
+
         User user =userService.getUserByToken(token);
 
         if(user == null)
