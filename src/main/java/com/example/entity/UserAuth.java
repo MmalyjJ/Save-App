@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -11,6 +13,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "user_auth")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAuth {
     @Column(name = "email")
     private String email;
@@ -32,8 +36,6 @@ public class UserAuth {
     @Transient
     private Role role;
 
-
-    public UserAuth(){}
 
     public UserAuth(String name, String email, String password, String confirmPassword) {
         this.userName = name;

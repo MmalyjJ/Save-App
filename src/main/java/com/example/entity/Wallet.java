@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user_wallets_save")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,8 +36,6 @@ public class Wallet {
     )
     private List<Payment> payments;
 
-
-    public Wallet(){}
 
     public Wallet(Long amount, Currency currency) {
         this.amount = amount;

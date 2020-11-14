@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "assets")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Asset {
     @Id
     @Column(name = "id")
@@ -25,8 +29,6 @@ public class Asset {
     @Column(name = "bought_date")
     private Date boughtDate;
 
-
-    public Asset(){}
 
     public Asset(String name, Long cost, Date boughtDate){
         this.name = name;

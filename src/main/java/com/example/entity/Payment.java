@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "payments")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,8 +36,6 @@ public class Payment {
     @Transient
     public int response_status = 0;
 
-
-    public Payment() {}
 
     public Payment(User from, User to, Long amount, Date dayCreated) {
         this.from = from;

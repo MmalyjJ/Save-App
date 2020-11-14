@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "users_save")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,8 +58,6 @@ public class User implements Serializable {
     @Transient
     private String confirmPassword;
 
-
-    public User(){}
 
     public User(String password, String phone, String email, String token) {
         this.password = password;

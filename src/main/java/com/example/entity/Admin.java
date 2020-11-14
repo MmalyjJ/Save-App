@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "admins_save")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,8 +39,6 @@ public class Admin {
     @Transient
     private Role role;
 
-
-    public Admin() {}
 
     public Admin(String phone, String password, String email, String token, Date dayCreated) {
         this.phone = phone;

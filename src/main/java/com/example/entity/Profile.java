@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "users_profiles_save")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,8 +32,6 @@ public class Profile {
     @Transient
     public int response_status = 0;
 
-
-    public Profile(){}
 
     public Profile(String firstName, String secondName, Date birthDay) {
         this.firstName = firstName;

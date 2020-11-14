@@ -1,7 +1,9 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user_portfolio")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,12 +42,15 @@ public class Portfolio {
     private List<Asset> assets;
 
 
-    public Portfolio(){}
-
     public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, List<Asset> assets) {
         this.totalBalanceNow = totalBalanceNow;
         this.totalBalancePrevDay = totalBalancePrevDay;
         this.tradeHistory = tradeHistory;
         this.assets = assets;
+    }
+
+
+    public void refreshAmount() {
+        this.totalBalancePrevDay = this.totalBalanceNow;
     }
 }

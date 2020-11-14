@@ -1,13 +1,17 @@
 package com.example.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 //@Table(name = "users_documents_save")
 public class Documents {
     @Id
