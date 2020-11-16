@@ -1,12 +1,12 @@
 package com.example.repo;
 
 
-import com.example.entity.Asset;
+import com.example.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AssetRepository extends JpaRepository<Asset, Integer> {
-    Asset findByName(String name);
+public interface StockRepository extends JpaRepository<Stock, Integer> {
+    Stock findByName(String name);
 }
