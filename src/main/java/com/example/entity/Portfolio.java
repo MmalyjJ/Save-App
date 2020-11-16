@@ -39,14 +39,14 @@ public class Portfolio {
             joinColumns = @JoinColumn(name = "portfolio_id"),
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
-    private List<Asset> assets;
+    private List<Stock> stocks;
 
 
-    public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, List<Asset> assets) {
+    public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, List<Stock> stocks) {
         this.totalBalanceNow = totalBalanceNow;
         this.totalBalancePrevDay = totalBalancePrevDay;
         this.tradeHistory = tradeHistory;
-        this.assets = assets;
+        this.stocks = stocks;
     }
 
 

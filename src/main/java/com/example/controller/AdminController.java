@@ -1,16 +1,21 @@
 package com.example.controller;
 
 
-import com.example.entity.*;
+import com.example.entity.Admin;
+import com.example.entity.Portfolio;
+import com.example.entity.Profile;
+import com.example.entity.User;
 import com.example.repo.*;
+import com.example.response.RestResponse;
 import com.example.service.AdminService;
-import com.example.service.AssetService;
-import com.example.service.PaymentService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
+
+import java.util.Date;
+import java.util.List;
+
+//import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/admin")
@@ -26,10 +31,7 @@ public class AdminController {
     private WalletRepository walletRepository;
 
     @Autowired
-    private AssetService assetService;
-
-    @Autowired
-    private AssetRepository assetRepository;
+    private StockRepository stockRepository;
 
     @Autowired
     private PaymentsRepository paymentsRepository;

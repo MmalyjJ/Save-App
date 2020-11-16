@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
-import com.example.entity.RestResponse;
+import com.example.response.RestResponse;
 import com.example.entity.User;
 import com.example.entity.Wallet;
 import com.example.service.UserService;

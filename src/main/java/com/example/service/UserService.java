@@ -2,14 +2,12 @@ package com.example.service;
 
 
 import com.example.entity.*;
-import com.example.exception.UserNotFoundException;
 import com.example.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -152,7 +150,7 @@ public class UserService {
     PortfolioRepository portfolioRepository;
 
     @Autowired
-    AssetRepository assetRepository;
+    StockRepository stockRepository;
 
     //Метод для регистрацци нового Портфолио
 

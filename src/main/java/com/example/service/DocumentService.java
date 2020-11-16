@@ -6,7 +6,7 @@ import com.example.repo.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -23,7 +23,7 @@ public class DocumentService {
     }
 
 
-    public List<Documents> getAllDocumentsById(String id) {
+    public Optional<Documents> getAllDocumentsById(Integer id) {
         if(documentsRepository != null)
             return documentsRepository.findById(id);
 

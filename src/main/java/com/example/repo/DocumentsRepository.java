@@ -5,10 +5,10 @@ import com.example.entity.Documents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface DocumentsRepository extends JpaRepository<Documents, Integer> {
-    List<Documents> findById(String id);
+    Optional<Documents> findById(Integer id);
 }
