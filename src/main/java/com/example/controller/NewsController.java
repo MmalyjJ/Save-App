@@ -20,7 +20,7 @@ public class NewsController {
     NewsAPI newsAPI;
 
 
-    @RequestMapping(value = "/get-news-by-category", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-news", method = RequestMethod.GET)
     public RestResponse<List<News>> getNewsByCategory(@RequestParam("category") String category) {
         List<News> news = newsAPI.getNewsByCategory(category);
 
