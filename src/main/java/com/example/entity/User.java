@@ -4,6 +4,7 @@ package com.example.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "users_save")
+@Table(name = "user_save")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
@@ -44,11 +45,7 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Documents documents;
-
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Wallet wallet;
 
 

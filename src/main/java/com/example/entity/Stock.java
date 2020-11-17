@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "assets")
+@Table(name = "stocks")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stock {

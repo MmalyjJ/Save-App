@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "users_profiles_save")
+@Table(name = "profiles")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile {

@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 @Entity
-@Table(name = "user_portfolio")
+@Table(name = "portfolios")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Portfolio {
@@ -35,21 +36,21 @@ public class Portfolio {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "portfolio_assets_save",
+            name = "portfolio_stocks",
             joinColumns = @JoinColumn(name = "portfolio_id"),
-            inverseJoinColumns = @JoinColumn(name = "asset_id")
+            inverseJoinColumns = @JoinColumn(name = "stock_id")
     )
-    private List<Stock> stocks;
+    private List<Stock> stocks = new ArrayList<>();
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    private List<Crypto> cryptos;
 
 
-    public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, List<Stock> stocks) {
+    public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, Stock stock) {
         this.totalBalanceNow = totalBalanceNow;
         this.totalBalancePrevDay = totalBalancePrevDay;
         this.tradeHistory = tradeHistory;
-        this.stocks = stocks;
+        this.stocks.add(stock);
     }
 
 

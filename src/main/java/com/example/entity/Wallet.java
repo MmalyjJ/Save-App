@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user_wallets_save")
+@Table(name = "wallets")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Wallet {
@@ -28,7 +28,7 @@ public class Wallet {
     private Currency currency;
 
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "wallet_payments",
             joinColumns = @JoinColumn(name = "wallet_id"),
