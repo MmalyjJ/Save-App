@@ -31,12 +31,17 @@ public class UserController {
     }
 
 
-//    @RequestMapping(value = "/make-payment", method = {RequestMethod.GET, RequestMethod.POST})
-//    public Payment makePayment(@RequestParam("token") String token, @RequestParam("/wallet-id-from") Integer walletIdFrom,
-//                               @RequestParam("to-id") Integer toId, @RequestParam("/wallet-id-to") Integer walletIdTo,
-//                               @RequestParam("amount") Long amount) {
-//        return userService.makePayment(token, walletIdFrom, toId, walletIdTo, amount);
-//    }
+    @RequestMapping(value = "/make-payment", method = {RequestMethod.GET, RequestMethod.POST})
+    public RestResponse<Payment> makePayment(@RequestParam("token") String token, @RequestParam("to-id") Integer toId,
+                               @RequestParam("amount") Long amount) {
+        Payment payment = userService.makePayment(token, toId, amount);
+
+        if(payment == null)
+            return new RestResponse<>(null, "PAYMENT PROBLEM", 8);
+
+        return new RestResponse<Payment>(payment, "ALL RIGHT", 0);
+    }
+
 
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
     public RestResponse<UserInfo> getInfoByToken(@RequestParam("token") String token) {
