@@ -18,7 +18,7 @@ public class MarketController {
     MarketAPI marketAPI;
 
 
-    @RequestMapping(value = "/stocks", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/stocks", method = RequestMethod.GET)
     public RestResponse<Stock> getMarketStock(@RequestParam("symbol") String symbol) {
         Stock stock = marketAPI.getMarketStock(symbol);
 
