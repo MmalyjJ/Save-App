@@ -24,18 +24,15 @@ public class Profile {
     private String firstName;
 
     @Column(name = "second_name")
-    private String secondName;
+    private String lastName;
 
     @Column(name = "birth_date")
     private Date birthDay;
 
-    @Transient
-    public int response_status = 0;
 
-
-    public Profile(String firstName, String secondName, Date birthDay) {
+    public Profile(String firstName, String lastName, Date birthDay) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.birthDay = birthDay;
     }
 }
