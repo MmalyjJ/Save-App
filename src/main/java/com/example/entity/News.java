@@ -40,6 +40,9 @@ public class News {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "isLiked")
+    private boolean isLiked;
+
+    @Column(name = "likes")
+    private int likes;
 }

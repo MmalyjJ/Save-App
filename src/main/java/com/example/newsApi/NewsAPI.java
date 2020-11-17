@@ -82,7 +82,6 @@ public class NewsAPI {
             news.setSourceName(article.optString("sourceName"));
             news.setTitle(article.optString("title").toString());
             news.setUrl(article.optString("url").toString());
-            news.setContent(formatContent(article.optString("content"), 2));
 
             newsList.add(news);
         }
