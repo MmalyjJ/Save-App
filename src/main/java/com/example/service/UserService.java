@@ -8,6 +8,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -193,39 +194,42 @@ public class UserService {
     /*МЕТОДЫ ДЛЯ РАБОТЫ С КОШЕЛЬКАМИ */
 
     //Создание новой оплаты
-//    public Payment makePayment(String token, Integer toId, Long amount) {
-//        if(userRepository != null && walletRepository != null && paymentsRepository != null) {
-//            User from = userRepository.findByToken(token);
-//            User to = userRepository.getOne(toId);
-//
-//            Wallet walletFrom = from.getWallet();
-//            Wallet walletTo = to.getWallet();
-//
-//            Payment payment;
-//
-//            if(walletFrom != null && walletTo != null) {
-//                if(walletFrom.getAmount() >= amount) {
-//                    walletFrom.setAmount(walletFrom.getAmount() - amount);
-//                    walletTo.setAmount(walletTo.getAmount() + amount);
-//
-//                    payment = new Payment(from, to, amount, new Date());
-//
-//                    walletFrom.addNewPayment(payment);
-//                    walletTo.addNewPayment(payment);
-//
-//                    from.setWallet(walletFrom);
-//                    to.setWallet(walletTo);
-//
-//                    userRepository.save(from);
-//                    userRepository.save(to);
-//
-//                    walletRepository.save()
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
+    public Payment makePayment(String token, Integer toId, Long amount) {
+        if(userRepository != null && walletRepository != null && paymentsRepository != null) {
+            User from = userRepository.findByToken(token);
+            User to = userRepository.getOne(toId);
+
+            Wallet walletFrom = from.getWallet();
+            Wallet walletTo = to.getWallet();
+
+            Payment payment;
+
+            if(walletFrom != null && walletTo != null) {
+                if(walletFrom.getAmount() >= amount) {
+                    walletFrom.setAmount(walletFrom.getAmount() - amount);
+                    walletTo.setAmount(walletTo.getAmount() + amount);
+
+                    payment = new Payment(from, to, amount, new Date());
+
+                    walletFrom.addNewPayment(payment);
+                    walletTo.addNewPayment(payment);
+
+                    from.setWallet(walletFrom);
+                    to.setWallet(walletTo);
+
+                    userRepository.save(from);
+                    userRepository.save(to);
+
+                    walletRepository.save(walletFrom);
+                    walletRepository.save(walletTo);
+
+                    return paymentsRepository.save(payment);
+                }
+            }
+        }
+
+        return null;
+    }
 
 
     //Метод для получения по критерию
