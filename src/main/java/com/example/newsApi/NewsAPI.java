@@ -2,7 +2,6 @@ package com.example.newsApi;
 
 
 import com.example.entity.News;
-import com.mysql.cj.xdevapi.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,24 @@ import java.util.List;
 public class NewsAPI {
     private static final String URL_ADDRESS = "http://newsapi.org/v2/top-headlines?category=";
     private static final String API_KEY = "&apiKey=a8ab51cc7ddb41fc9e63126e99b106bd";
+
+
+    public String formatContent(String content, int howMuchSentence) {
+        String[] contentParts = content.split(".", howMuchSentence);
+
+        StringBuffer result = new StringBuffer();
+
+        for (int i = 0; i < contentParts.length; i++)
+            result.append(contentParts[i]);
+
+        for (String string : contentParts) {
+            System.out.println(string);
+        }
+
+        System.out.println(result.toString());
+
+        return result.toString();
+    }
 
 
     public List<News> getNewsByCategory(String category)  {
@@ -46,6 +63,7 @@ public class NewsAPI {
 
         } catch (IOException e) { e.printStackTrace(); }
 
+
         System.out.println(new JSONObject(content.toString()));
 
         JSONObject jsonObject = new JSONObject(content.toString());
@@ -53,17 +71,18 @@ public class NewsAPI {
 
         JSONArray articles = jsonObject.getJSONArray("articles");
 
+
         for (int i = 0; i < articles.length(); i++) {
             article = articles.getJSONObject(i);
 
-            news.setPublishedAt(article.getString("publishedAt"));
-            news.setAuthor(article.getString("author"));
-            news.setUrlToImage(article.getString("urlToImage"));
-            news.setDescription(article.getString("description"));
-            news.setSourceName(article.getString("sourceName"));
-            news.setTitle(article.getString("title"));
-            news.setUrl(article.getString("url"));
-            news.setContent(article.getString("content"));
+            news.setPublishedAt(article.optString("publishedAt"));
+            news.setAuthor(article.optString("author").toString());
+            news.setUrlToImage(article.optString("urlToImage").toString());
+            news.setDescription(formatContent(article.optString("description").toString(), 2));
+            news.setSourceName(article.optString("sourceName"));
+            news.setTitle(article.optString("title").toString());
+            news.setUrl(article.optString("url").toString());
+            news.setContent(formatContent(article.optString("content"), 2));
 
             newsList.add(news);
         }
