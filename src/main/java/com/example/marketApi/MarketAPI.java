@@ -1,10 +1,10 @@
 package com.example.marketApi;
 
 
-import com.example.entity.Crypto;
 import com.example.entity.Currency;
 import com.example.entity.Stock;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.example.entity.StockCandle;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +14,17 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 public class MarketAPI {
-    private static final String API_KEY = "&token=bupacc748v6sjkjiudq0";
+    private static final String API_KEY = "apiKey=JOD_Y4F3PP0kiIR7OcufsRl_lXUAQ8jP";
 
 
-    public Stock getMarketStock(String symbol)  {
-        String URL_ADDRESS = "https://finnhub.io/api/v1/stock/profile2?symbol=";
+    public Stock getMarketStockInfo(String ticker) {
+        String URL_ADDRESS = "https://api.polygon.io/v1/meta/symbols/" + ticker + "/company?apiKey=JOD_Y4F3PP0kiIR7OcufsRl_lXUAQ8jP";
 
         Stock stock = new Stock();
 
@@ -34,7 +35,7 @@ public class MarketAPI {
         String tempString;
 
         try {
-            url = new URL(URL_ADDRESS + symbol + API_KEY);
+            url = new URL(URL_ADDRESS);
         } catch (MalformedURLException e) { e.printStackTrace(); }
 
         try {
@@ -46,50 +47,204 @@ public class MarketAPI {
 
         } catch (IOException e) { e.printStackTrace(); }
 
-        System.out.println(new JSONObject(content.toString()));
-
         JSONObject jsonObject = new JSONObject(content.toString());
 
-
-        stock.setIndustry(jsonObject.getString("finnhubIndustry"));
-        stock.setTicker(jsonObject.getString("ticker"));
-        stock.setCost(jsonObject.getLong("marketCapitalization"));
-        stock.setCountry(jsonObject.getString("country"));
-        stock.setPhone(jsonObject.getString("phone"));
-        stock.setUrl(jsonObject.getString("weburl"));
-        stock.setName(jsonObject.getString("name"));
-        stock.setLogo(jsonObject.getString("logo"));
+        stock.setTicker(jsonObject.getString("symbol"));
+        stock.setLogo(jsonObject.optString("logo"));
+        stock.setCountry(jsonObject.optString("country"));
+        stock.setIndustry(jsonObject.optString("industry"));
+        stock.setPhone(jsonObject.optString("phone"));
+        stock.setUrl(jsonObject.optString("url"));
+        stock.setDescription(jsonObject.optString("description"));
+        stock.setLogo(jsonObject.optString("logo"));
+        stock.setName(jsonObject.optString("name"));
         stock.setCurrency(Currency.USD);
-        stock.setShareOutstanding(jsonObject.getDouble("shareOutstanding"));
-        stock.setBoughtDate(new Date());
-
 
         return stock;
     }
 
 
-//    public Crypto getMarketCrypto(String symbol) {
-//        String URL = "https://finnhub.io/api/v1/crypto/candle?symbol=:";
-//        String API_KEY = "&resolution=D&token=" + MarketAPI.API_KEY;
-//
-//
-//        URL url = null;
-//        URLConnection urlConnection = null;
-//        BufferedReader bufferedReader = null;
-//        StringBuffer content = new StringBuffer();
-//        String tempString;
-//
-//        try {
-//            url = new URL(URL + symbol + API_KEY);
-//        } catch (MalformedURLException e) { e.printStackTrace(); }
-//
-//        try {
-//            urlConnection = url.openConnection();
-//            bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//
-//            while ((tempString = bufferedReader.readLine()) != null)
-//                content.append(tempString + "\n");
-//
-//        } catch (IOException e) { e.printStackTrace(); }
-//    }
+    public List<StockCandle> getMarketStockCandlesIntraday(String ticker) {
+        String URL_ADDRESS = "http://api.marketstack.com/v1/intraday?access_key=11af2a4edff7b1a911b13dcd1b72d4b7&symbols=" + ticker;
+
+        StockCandle stockCandle;
+        List<StockCandle> stockCandles = new ArrayList<>();
+
+        URL url = null;
+        URLConnection urlConnection = null;
+        BufferedReader bufferedReader = null;
+        StringBuffer content = new StringBuffer();
+        String tempString;
+
+        try {
+            url = new URL(URL_ADDRESS);
+        } catch (MalformedURLException e) { e.printStackTrace(); }
+
+        try {
+            urlConnection = url.openConnection();
+            bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            while ((tempString = bufferedReader.readLine()) != null)
+                content.append(tempString + "\n");
+
+        } catch (IOException e) { e.printStackTrace(); }
+
+        JSONObject jsonObject = new JSONObject(content.toString());
+        JSONArray jsonArray = new JSONArray(jsonObject.getJSONArray("data"));
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stockCandle = new StockCandle();
+
+            stockCandle.setTicker(jsonArray.getJSONObject(i).getString("symbol"));
+            stockCandle.setOpenPrices(jsonArray.getJSONObject(i).getDouble("open"));
+            stockCandle.setHighPrices(jsonArray.getJSONObject(i).getDouble("high"));
+            stockCandle.setLowPrices(jsonArray.getJSONObject(i).getDouble("low"));
+            stockCandle.setClosePrices(jsonArray.getJSONObject(i).getDouble("close"));
+//            stockCandle.setVolumeData(jsonArray.getJSONObject(i).get("volume"));
+
+            stockCandles.add(stockCandle);
+        }
+
+        return stockCandles;
+    }
+
+
+    public List<StockCandle> getMarketStockCandlesIntradayInterval(String ticker, String interval) {
+        String URL_ADDRESS = "https://api.marketstack.com/v1/intraday?access_key=11af2a4edff7b1a911b13dcd1b72d4b7&" +
+                "symbols=" + ticker + "&interval=" + interval;
+
+        StockCandle stockCandle;
+        List<StockCandle> stockCandles = new ArrayList<>();
+
+        URL url = null;
+        URLConnection urlConnection = null;
+        BufferedReader bufferedReader = null;
+        StringBuffer content = new StringBuffer();
+        String tempString;
+
+        try {
+            url = new URL(URL_ADDRESS);
+        } catch (MalformedURLException e) { e.printStackTrace(); }
+
+        try {
+            urlConnection = url.openConnection();
+            bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            while ((tempString = bufferedReader.readLine()) != null)
+                content.append(tempString + "\n");
+
+        } catch (IOException e) { e.printStackTrace(); }
+
+        JSONObject jsonObject = new JSONObject(content.toString());
+        JSONArray jsonArray = new JSONArray(jsonObject.getJSONArray("data"));
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stockCandle = new StockCandle();
+
+            stockCandle.setTicker(jsonArray.getJSONObject(i).getString("symbol"));
+            stockCandle.setOpenPrices(jsonArray.getJSONObject(i).getDouble("open"));
+            stockCandle.setHighPrices(jsonArray.getJSONObject(i).getDouble("high"));
+            stockCandle.setLowPrices(jsonArray.getJSONObject(i).getDouble("low"));
+            stockCandle.setClosePrices(jsonArray.getJSONObject(i).getDouble("close"));
+//            stockCandle.setVolumeData(jsonArray.getJSONObject(i).get("volume"));
+
+            stockCandles.add(stockCandle);
+        }
+
+        return stockCandles;
+    }
+
+
+    //YYYY-MM-DD
+    public List<StockCandle> getMarketStockCandleEndOfDay(String ticker, String date) {
+        String URL_ADDRESS = "https://api.marketstack.com/v1/eod/" + date +
+                "?access_key=11af2a4edff7b1a911b13dcd1b72d4b7&symbols=" + ticker;
+
+        StockCandle stockCandle;
+        List<StockCandle> stockCandles = new ArrayList<>();
+
+        URL url = null;
+        URLConnection urlConnection = null;
+        BufferedReader bufferedReader = null;
+        StringBuffer content = new StringBuffer();
+        String tempString;
+
+        try {
+            url = new URL(URL_ADDRESS);
+        } catch (MalformedURLException e) { e.printStackTrace(); }
+
+        try {
+            urlConnection = url.openConnection();
+            bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            while ((tempString = bufferedReader.readLine()) != null)
+                content.append(tempString + "\n");
+
+        } catch (IOException e) { e.printStackTrace(); }
+
+        JSONObject jsonObject = new JSONObject(content.toString());
+        JSONArray jsonArray = new JSONArray(jsonObject.getJSONArray("data"));
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stockCandle = new StockCandle();
+
+            stockCandle.setTicker(jsonArray.getJSONObject(i).getString("symbol"));
+            stockCandle.setOpenPrices(jsonArray.getJSONObject(i).getDouble("open"));
+            stockCandle.setHighPrices(jsonArray.getJSONObject(i).getDouble("high"));
+            stockCandle.setLowPrices(jsonArray.getJSONObject(i).getDouble("low"));
+            stockCandle.setClosePrices(jsonArray.getJSONObject(i).getDouble("close"));
+//            stockCandle.setVolumeData(jsonArray.getJSONObject(i).get("volume"));
+
+            stockCandles.add(stockCandle);
+        }
+
+        return stockCandles;
+    }
+
+
+
+    public List<StockCandle> getMarketStockCandleInterval(String ticker, String from, String to) {
+        String URL_ADDRESS = "https://api.marketstack.com/v1/eod?access_key=11af2a4edff7b1a911b13dcd1b72d4b7&symbols=" + ticker +
+                "&" + from + "&" + to;
+
+        StockCandle stockCandle;
+        List<StockCandle> stockCandles = new ArrayList<>();
+
+        URL url = null;
+        URLConnection urlConnection = null;
+        BufferedReader bufferedReader = null;
+        StringBuffer content = new StringBuffer();
+        String tempString;
+
+        try {
+            url = new URL(URL_ADDRESS);
+        } catch (MalformedURLException e) { e.printStackTrace(); }
+
+        try {
+            urlConnection = url.openConnection();
+            bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            while ((tempString = bufferedReader.readLine()) != null)
+                content.append(tempString + "\n");
+
+        } catch (IOException e) { e.printStackTrace(); }
+
+        JSONObject jsonObject = new JSONObject(content.toString());
+        JSONArray jsonArray = new JSONArray(jsonObject.getJSONArray("data"));
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stockCandle = new StockCandle();
+
+            stockCandle.setTicker(jsonArray.getJSONObject(i).getString("symbol"));
+            stockCandle.setOpenPrices(jsonArray.getJSONObject(i).getDouble("open"));
+            stockCandle.setHighPrices(jsonArray.getJSONObject(i).getDouble("high"));
+            stockCandle.setLowPrices(jsonArray.getJSONObject(i).getDouble("low"));
+            stockCandle.setClosePrices(jsonArray.getJSONObject(i).getDouble("close"));
+//            stockCandle.setVolumeData(jsonArray.getJSONObject(i).get("volume"));
+
+            stockCandles.add(stockCandle);
+        }
+
+        return stockCandles;
+    }
 }

@@ -23,9 +23,6 @@ public class Stock {
     @Column(name = "ticker")
     private String ticker;
 
-    @Column(name = "cost")
-    private Long cost;
-
     @Column(name = "bought_date")
     private Date boughtDate;
 
@@ -54,10 +51,6 @@ public class Stock {
     @Column(name = "shareOutstanding")
     private double shareOutstanding;
 
-
-    public Stock(String ticker, Long cost, Date boughtDate){
-        this.ticker = ticker;
-        this.cost = cost;
-        this.boughtDate = boughtDate;
-    }
+    @Column(name = "description")
+    private String description;
 }
