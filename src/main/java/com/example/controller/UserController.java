@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Payment;
+import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.entity.Wallet;
 import com.example.response.PaymentInfo;
@@ -46,10 +47,14 @@ public class UserController {
     @RequestMapping(value = "/get-info-by-token", method = RequestMethod.GET)
     public RestResponse<UserInfo> getInfoByToken(@RequestParam("token") String token) {
         User user =userService.getUserByToken(token);
+
+        user.setRole(Role.USER);
+        user.setConfirmPassword(user.getPassword());
+
         UserInfo userInfo = new UserInfo(user);
 
         if(user == null)
-            return new RestResponse<>(null, "TOKEN PROBLEM", 3);
+            return new RestResponse<UserInfo>(null, "TOKEN PROBLEM", 3);
 
         return new RestResponse<UserInfo>(userInfo, "ALL RIGHT", 0);
     }
