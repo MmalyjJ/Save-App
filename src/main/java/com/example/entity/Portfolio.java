@@ -42,9 +42,6 @@ public class Portfolio {
     )
     private List<Stock> stocks = new ArrayList<>();
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    private List<Crypto> cryptos;
-
 
     public Portfolio(long totalBalanceNow,Long totalBalancePrevDay, String tradeHistory, Stock stock) {
         this.totalBalanceNow = totalBalanceNow;
