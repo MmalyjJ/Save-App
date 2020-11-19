@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class AdminService {
-    /*МЕТОДЫ ДЛЯ РАБОТЫ С АДМИНИСТРАТОРАМИ*/
+    /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С АДМИНИСТРАТОРАМИ ------ */
 
     @Autowired
     AdminRepository adminRepository;

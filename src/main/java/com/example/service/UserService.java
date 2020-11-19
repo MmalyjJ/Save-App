@@ -17,16 +17,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    WalletRepository walletRepository;
 
-    @Autowired
-    PaymentsRepository paymentsRepository;
+    /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЯМИ ------- */
 
-
-    /*МЕТОДЫ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЯМИ */
-
-    //    Регистрация нового пользователя
+    //Регистрация нового пользователя
     public User registerUser(User user) {
         if (userRepository != null && !userRepository.exists(Example.of(user))) {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -122,10 +116,11 @@ public class UserService {
 
 
 
-    /*МЕТОДЫ ДЛЯ РАБОТЫ С ПРОФИЛЯМИ ПОЛЬЗОВАТЕЛЕЙ*/
+    /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С ПРОФИЛЯМИ ПОЛЬЗОВАТЕЛЕЙ ------ */
 
     @Autowired
     ProfileRepository profileRepository;
+
 
     //Установить новый профайл
     public Profile setNewProfile(Integer id, Profile profile) {
@@ -145,7 +140,7 @@ public class UserService {
     }
 
 
-    /*МЕТОДЫ ДЛЯ РАБОТЫ С ПОРТФОЛИО ПОЛЬЗОВАТЕЛЕЙ*/
+    /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С ПОРТФОЛИО ПОЛЬЗОВАТЕЛЕЙ ------ */
 
     @Autowired
     PortfolioRepository portfolioRepository;
@@ -153,8 +148,8 @@ public class UserService {
     @Autowired
     StockRepository stockRepository;
 
-    //Метод для регистрацци нового Портфолио
 
+    //Метод для регистрацци нового Портфолио
     public Portfolio addPortfolio(Portfolio portfolio) {
         if(portfolioRepository != null)
             return portfolioRepository.save(portfolio);
@@ -164,7 +159,6 @@ public class UserService {
 
 
     //Метод для получения портволио по критерию
-
     public Portfolio getPortfolioByUserId(Integer id) {
         if(portfolioRepository != null) {
             if (getUserById(id) != null)
@@ -191,7 +185,14 @@ public class UserService {
 //    }
 
 
-    /*МЕТОДЫ ДЛЯ РАБОТЫ С КОШЕЛЬКАМИ */
+    /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С КОШЕЛЬКАМИ ------ */
+
+    @Autowired
+    WalletRepository walletRepository;
+
+    @Autowired
+    PaymentsRepository paymentsRepository;
+
 
     //Создание новой оплаты
     public Payment makePayment(String token, Integer toId, Long amount) {
