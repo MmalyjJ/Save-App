@@ -26,11 +26,9 @@ public class NewsAPI {
         String[] contentParts = content.split(" ", howMuchWords);
         StringBuffer result = new StringBuffer();
 
-        for (int i = 0; i < contentParts.length; i++) {
+        for (int i = 0; i < contentParts.length; i++)
             result.append(contentParts[i]);
-        }
 
-        System.out.println(contentParts.length);
         System.out.println(result);
 
         return result.toString();

@@ -33,8 +33,11 @@ public class NewsService {
             List<News> newsList = newsAPI.getNewsByCategory(category);
 
             for (News news : newsList) {
-                if(!newsRepository.exists(Example.of(news)))
-                    newsRepository.save(news);
+
+                if(!newsRepository.exists(Example.of(news))) {
+                    if(!news.getDescription().equals(""))
+                        newsRepository.save(news);
+                }
             }
 
             return newsList;
