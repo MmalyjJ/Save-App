@@ -1,10 +1,13 @@
 package com.example.controller;
 
 
+import com.example.entity.Comment;
 import com.example.entity.News;
+import com.example.entity.User;
 import com.example.newsApi.NewsAPI;
 import com.example.response.RestResponse;
 import com.example.service.NewsService;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,10 +26,13 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    UserService userService;
+
 
     @RequestMapping(value = "/get-news", method = RequestMethod.GET)
     public RestResponse<List<News>> getNewsByCategory(@RequestParam("category") String category) {
-        List<News> news = newsAPI.getNewsByCategory(category);
+        List<News> news = newsService.getNews(category);
 
         if(news == null)
             return new RestResponse<>(null, "NEWS PROBLEM", 12);
@@ -43,5 +49,97 @@ public class NewsController {
             return new RestResponse<Boolean>(false, "NEWS IS NOT LIKED", 0);
 
         return new RestResponse<Boolean>(true, "NEWS IS LIKED", 0);
+    }
+
+
+    @RequestMapping(value = "add-like", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<News> addLike(@RequestParam("id") Integer id) {
+        News news = newsService.addLike(id);
+
+        if(news == null)
+            return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<News>(news, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "remove-like", method = {RequestMethod.GET, RequestMethod.DELETE})
+    public RestResponse<News> removeLike(@RequestParam("id") Integer id) {
+        News news = newsService.removeLike(id);
+
+        if(news == null)
+            return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<News>(news, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "add-comment", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<News> addComment(@RequestParam("id") Integer id, @RequestParam("user-id") Integer userId,
+                                            @RequestParam("content") String content) {
+        User user = userService.getUserById(userId);
+        News news = newsService.addComment(id, new Comment(user, content));
+
+        if(news == null)
+            return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<News>(news, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "remove-comment", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<News> removeComment(@RequestParam("id") Integer id, @RequestParam("comment-id") Integer commentId) {
+        News news = newsService.removeComment(id, commentId);
+
+        if(news == null)
+            return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<News>(news, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "update-comment", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<News> updateComment(@RequestParam("id") Integer id, @RequestParam("comment-id") Integer commentId,
+                                               @RequestParam("content") String content){
+        User user = newsService.getCommentById(id).getUser();
+        News news = newsService.updateComment(id, commentId, new Comment(user, content));
+
+        if(news == null)
+            return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<News>(news, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "add-like-comment", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<Comment> addLikeComment(@RequestParam("id") Integer id, @RequestParam("comment-id") Integer commentId) {
+        Comment comment = newsService.addLikeComment(id, commentId);
+
+        if(comment == null)
+            return new RestResponse<>(null, "COMMENT PROBLEM", 15);
+
+        return new RestResponse<Comment>(comment , "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "is-liked-comment", method = RequestMethod.GET)
+    public RestResponse<Boolean> isLikedComment (@RequestParam("id") Integer id, @RequestParam("comment-id") Integer commentId) {
+        boolean isLiked = newsService.isLikedComment(id, commentId);
+
+        if(!isLiked)
+            return new RestResponse<Boolean>(false, "NOT LIKED", 0);
+
+        return new RestResponse<Boolean>(true, "LIKED", 0);
+    }
+
+
+    @RequestMapping(value = "remove-like-comment", method = {RequestMethod.GET, RequestMethod.PUT})
+    public RestResponse<Comment> removeLikeComment(@RequestParam("id") Integer id, @RequestParam("comment-id") Integer commentId) {
+        Comment comment = newsService.removeLikeComment(id, commentId);
+
+        if(comment == null)
+            return new RestResponse<>(null, "COMMENT PROBLEM", 15);
+
+        return new RestResponse<Comment>(comment , "ALL RIGHT", 0);
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -28,8 +29,11 @@ public class News {
     @Column(name = "urlToImage")
     private String urlToImage;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1000)
     private String description;
+
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "sourceName")
     private String sourceName;
@@ -45,4 +49,14 @@ public class News {
 
     @Column(name = "likes")
     private int likes;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "news_comments",
+            joinColumns = @JoinColumn(name = "news_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id")
+    )
+    private List<Comment> comments;
+
+    private int commentsCount;
 }
