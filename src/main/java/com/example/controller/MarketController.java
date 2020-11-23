@@ -55,6 +55,17 @@ public class MarketController {
     }
 
 
+    @RequestMapping(value = "/stock-candles-intraday1", method = RequestMethod.GET)
+    public RestResponse<List<StockCandle>> getMarketStockCandles1(@RequestParam("ticker") String ticker) {
+        List<StockCandle> stockCandles = marketAPI.getMarketStockCandlesIntraday(ticker);
+
+        if(stockCandles == null)
+            return new RestResponse<>(null, "STOCK PROBLEM", 12);
+
+        return new RestResponse<List<StockCandle>>(stockCandles, "ALL RIGHT", 0);
+    }
+
+
     @RequestMapping(value = "/stock-candles-intraday-interval", method = RequestMethod.GET)
     public RestResponse<List<StockCandle>> getMarketStockCandlesIntradayInterval(@RequestParam("ticker") String ticker,
                                                                                  @RequestParam("interval") String interval) {
