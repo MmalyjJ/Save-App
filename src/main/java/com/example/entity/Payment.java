@@ -11,9 +11,9 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "payments")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "payments")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

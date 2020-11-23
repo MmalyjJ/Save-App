@@ -25,7 +25,7 @@ public class NewsParser {
     public List<News> parseNews() {
         List<News> newsList = new ArrayList<>();
 
-        SEARCH_URL = "https://www.cnbc.com/latest/";
+        SEARCH_URL = "https://seekingalpha.com/market-news";
 
         Document document = null;
 
@@ -35,30 +35,37 @@ public class NewsParser {
 
 
         Elements elements = document.select("a");
-        String[] linksArray = new String[elements.size()];
 
-        for (int i = 0; i < elements.size(); i++)
-            linksArray[i] = elements.get(i).absUrl("href");
+        for (Element element : elements) {
+            String link = element.absUrl("href");
 
-
-        //Получение уникальных ссылок
-        Set<String> links = new TreeSet<>(Arrays.asList(linksArray));
-
-        for (String link : links) {
-            News news = new News();
-            // Выборка правильных URL-ссылок
-            if(!link.contains("20") || link.contains("peacocktv.com") || link.contains("elections"))
-                continue;
-
-            news.setTitle(getTitle(link));
-            news.setKeyPoints(getKeyPoints(link));
-            news.setPublishedAt(getPublishedAt(link));
-
-            // Елси нет основного содержания новости по ссылке -> не добавлять
-            if(!news.getKeyPoints().isEmpty() || news.getKeyPoints() != null)
-                newsList.add(news);
+            if(link.contains("news") && !link.contains("market") && !link.contains("earnings") && ! link.contains("dividend"))
+                getKeyPoints(link);
         }
 
+//        String[] linksArray = new String[elements.size()];
+//
+//        for (int i = 0; i < elements.size(); i++)
+//            linksArray[i] = elements.get(i).absUrl("href");
+//
+//
+//        //Получение уникальных ссылок
+//        Set<String> links = new TreeSet<>(Arrays.asList(linksArray));
+//
+//        for (String link : links) {
+//            News news = new News();
+//            // Выборка правильных URL-ссылок
+//            if(!link.contains("20") || link.contains("peacocktv.com") || link.contains("elections"))
+//                continue;
+//
+//            news.setTitle(getTitle(link));
+//            news.setKeyPoints(getKeyPoints(link));
+//            news.setPublishedAt(getPublishedAt(link));
+//
+//            // Елси нет основного содержания новости по ссылке -> не добавлять
+//            if(!news.getKeyPoints().isEmpty() || news.getKeyPoints() != null)
+//                newsList.add(news);
+//        }
         return newsList;
     }
 
@@ -72,11 +79,9 @@ public class NewsParser {
             document = (Document) Jsoup.connect(link).get();
         } catch (IOException e) { e.printStackTrace(); }
 
-        Elements group = document.select("div.group > ul");
+        Elements contentContainer = document.getElementsByAttributeValue("data-test-id", "content-container");
 
-        String[] keyPointsSplited = group.text().split("[.]");
-
-        Collections.addAll(keyPoints, keyPointsSplited);
+        System.out.println(contentContainer.text() + "\n");
 
         return keyPoints;
     }

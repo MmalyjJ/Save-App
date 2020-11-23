@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,52 +14,49 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "articles")
+//@Table(name = "articles")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Article {
+public class Article implements Serializable {
     @Id
-    @Column(name = "id")
+//    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "title")
+//    @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+//    @Column(name = "content")
     private String content;
 
-    @Column(name = "url")
-    private String url;
-
-    @Column(name = "isLiked")
+//    @Column(name = "isLiked")
     private boolean isLiked;
 
-    @Column(name = "likes")
+//    @Column(name = "likes")
     private int likes;
 
-    @Column(name = "date")
+//    @Column(name = "date")
     private Date date;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)//, mappedBy = "users")
+//    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "articles_comments",
-            joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "comment_id")
-    )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)//, mappedBy = "comments")
+//    @JoinTable(
+//            name = "articles_comments",
+//            joinColumns = @JoinColumn(name = "article_id"),
+//            inverseJoinColumns = @JoinColumn(name = "comment_id")
+//    )
     private List<Comment> comments;
 
     @Column(name = "commentsCount")
     private int commentsCount;
 
 
-    public Article(String title, String content, String url, User user) {
+    public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
-        this.url = url;
         this.isLiked = false;
         this.likes = 0;
         this.comments = new ArrayList<>();

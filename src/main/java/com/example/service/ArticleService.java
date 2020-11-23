@@ -71,6 +71,15 @@ public class ArticleService {
     }
 
 
+    // Получить все статьи пользователей
+    public List<Article> getAllArticles() {
+        if(articleRepository != null)
+            return articleRepository.findAll();
+
+        return null;
+    }
+
+
     /* ------ МЕТОДЫ ДЛЯ РАБТО С ЛАЙКАМИ ------ */
 
     // Пролайкана ли статья

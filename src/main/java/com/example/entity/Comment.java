@@ -13,26 +13,27 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comments")
+//@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+//    @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)//, mappedBy = "users")
+//    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "content")
+//    @Column(name = "content")
     private String content;
 
-    @Column(name = "date")
+//    @Column(name = "date")
     private Date date;
 
-    @Column(name = "isLiked")
+//    @Column(name = "isLiked")
     private boolean isLiked;
 
-    @Column(name = "likes")
+//    @Column(name = "likes")
     private int likes;
 
 

@@ -28,20 +28,36 @@ public class NewsService {
 
 
     /* ------ МЕТОДЫ ДЛЯ РАБОТЫ С НОВОСТЯМИ ------ */
-    public List<News> getNews(String category) {
-        if(newsRepository != null) {
-            List<News> newsList = newsAPI.getNewsByCategory(category);
+//    public List<News> getAllNewsByCategory(String category) {
+//        if(newsRepository != null) {
+//            List<News> newsList = newsAPI.getNewsByCategory(category);
+//
+//            for (News news : newsList) {
+//                if(!newsRepository.exists(Example.of(news))) {
+//                    if(!news.getDescription().equals("") && !news.getAuthor().equals(""))
+//                        newsRepository.save(news);
+//                }
+//            }
+//
+//            return newsList;
+//        }
+//
+//        return null;
+//    }
 
-            for (News news : newsList) {
 
-                if(!newsRepository.exists(Example.of(news))) {
-                    if(!news.getDescription().equals(""))
-                        newsRepository.save(news);
-                }
-            }
+//    public List<News> getAllNewsByCategoryFromDB(String category) {
+//        if(newsRepository != null) {
+//            return newsRepository.findAllByCategory(category);
+//        }
+//
+//        return null;
+//    }
 
-            return newsList;
-        }
+
+    public News getNewsById(Integer id) {
+        if(newsRepository != null && newsRepository.getOne(id) != null)
+            return newsRepository.findById(id).get();
 
         return null;
     }
@@ -60,7 +76,7 @@ public class NewsService {
 
     // Добавить лайк
     public News addLike(Integer id) {
-        if(newsRepository != null && newsRepository.getOne(id) == null) {
+        if(newsRepository != null && newsRepository.getOne(id) != null) {
             News news = newsRepository.getOne(id);
 
             news.setLikes(news.getLikes() + 1);
@@ -74,7 +90,7 @@ public class NewsService {
 
     // Уалить лайка
     public News removeLike(Integer id) {
-        if(newsRepository != null && newsRepository.getOne(id) == null) {
+        if(newsRepository != null && newsRepository.getOne(id) != null) {
             News news = newsRepository.getOne(id);
 
             news.setLikes(news.getLikes() - 1);

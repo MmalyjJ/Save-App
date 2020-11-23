@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,12 +14,13 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "user_save")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
     private Integer id;
 
@@ -39,13 +41,13 @@ public class User implements Serializable {
     private Date dayCreated;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)//, mappedBy = "profiles")
     private Profile profile;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)//, mappedBy = "portfolios")
     private Portfolio portfolio;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)//, mappedBy = "wallets")
     private Wallet wallet;
 
 

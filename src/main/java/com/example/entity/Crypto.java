@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class Crypto {
     private Integer id;
 
-    private String symbol;
+    private String ticker;
 
-    private String displaySymbol;
+    private String name;
 
-    private Long amount;
+    private String sector;
 }

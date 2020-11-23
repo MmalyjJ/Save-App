@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/feed")
@@ -26,12 +28,12 @@ public class ArticleController {
 
     @RequestMapping(value = "/add-new-article", method = {RequestMethod.GET, RequestMethod.POST})
     public RestResponse<Article> addNewArticle(@RequestParam("email") String email, @RequestParam("title") String title,
-                                              @RequestParam("content") String content, @RequestParam("url") String url) {
+                                              @RequestParam("content") String content) {
         User user = userService.getUserByEmail(email);
         Article article;
 
         if (user != null) {
-            article = articleService.addNewArticle(new Article(title, content, url, user));
+            article = articleService.addNewArticle(new Article(title, content, user));
 
             if(article == null)
                 return new RestResponse<>(null, "ARTICLE PROBLEM", 14);
@@ -69,6 +71,17 @@ public class ArticleController {
             return new RestResponse<>(null , "ARTICLE PROBLEM", 14);
 
         return new RestResponse<Article>(article, "ALL RIGHT", 0);
+    }
+
+
+    @RequestMapping(value = "/get-all-articles", method = RequestMethod.GET)
+    public RestResponse<List<Article>> getAllArticles() {
+        List<Article> articles = articleService.getAllArticles();
+
+        if(articles == null)
+            return new RestResponse<>(null, "ARTICLE PROBLEM", 14);
+
+        return new RestResponse<List<Article>>(articles, "ALL RIGHT", 0);
     }
 
 
