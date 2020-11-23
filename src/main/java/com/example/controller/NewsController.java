@@ -1,21 +1,14 @@
 package com.example.controller;
 
 
-import com.example.entity.Comment;
 import com.example.entity.News;
-import com.example.entity.User;
-import com.example.newsApi.NewsAPI;
 import com.example.parser.NewsParser;
-import com.example.response.RestResponse;
-import com.example.service.NewsService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -27,9 +20,6 @@ public class NewsController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    NewsAPI newsAPI;
 
     @Autowired
     NewsParser newsParser;

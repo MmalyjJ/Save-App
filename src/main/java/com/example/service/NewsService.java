@@ -1,10 +1,8 @@
 package com.example.service;
 
 
-import com.example.entity.Article;
 import com.example.entity.Comment;
 import com.example.entity.News;
-import com.example.newsApi.NewsAPI;
 import com.example.repo.CommentRepository;
 import com.example.repo.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,6 @@ import java.util.List;
 
 @Service
 public class NewsService {
-    @Autowired
-    NewsAPI newsAPI;
-
     @Autowired
     NewsRepository newsRepository;
 
