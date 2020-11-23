@@ -64,7 +64,7 @@ public class MarketAPI {
     }
 
 
-    public List<StockCandle> getMarketStockCandlesIntraday(String ticker) {
+    public String getMarketStockCandlesIntraday(String ticker) {
         String URL_ADDRESS = "http://api.marketstack.com/v1/intraday?access_key=11af2a4edff7b1a911b13dcd1b72d4b7&symbols=" + ticker;
 
         StockCandle stockCandle;
@@ -105,7 +105,7 @@ public class MarketAPI {
             stockCandles.add(stockCandle);
         }
 
-        return stockCandles;
+        return stockCandles.toString();
     }
 
 
