@@ -2,7 +2,7 @@ package com.example.controller;
 
 
 import com.example.entity.News;
-import com.example.parser.NewsParser;
+import com.example.newsApi.NewsParser;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

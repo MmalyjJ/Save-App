@@ -137,6 +137,10 @@
       <artifactId>jsoup</artifactId>
       <version>1.13.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
 
   </dependencies>
 
@@ -164,10 +168,6 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-<!--            <configuration>-->
-<!--                <source>11</source>-->
-<!--                <target>11</target>-->
-<!--            </configuration>-->
         </plugin>
     </plugins>
   </build>
